@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  # Configuración contenedor de MongoDB
+  db:
+    image: mongo
+    container_name: affiliation-db-dev
+    volumes:
+      - affiliation-db-dev-data:/data/db
+    restart: always
+    ports:
+      - '27019:27017'
+    logging:
+      driver: none
+  # Configuración contenedor API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: affiliation-api:dev
+    container_name: affiliation-api-dev
+    environment:
+      MONGODB_URI: db
+      JWT_SECRET: secret
+      CLOUD_NAME: deqnmn50h
+      API_KEY: 563721284152585
+      API_SECRET: _wyTCD42cCFarVeZSaF7REqLtgU
+    volumes:
+      - /home/app/node_modules
+      - .:/app
+    restart: always
+    ports:
+      - '3001:3000'
+    links:
+      - db
+
+volumes:
+  affiliation-db-dev-data:
+    name: affiliation-db-dev-data

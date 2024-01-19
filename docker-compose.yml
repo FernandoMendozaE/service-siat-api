@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+  # Configuración contenedor de MongoDB
+  db:
+    image: mongo
+    container_name: affiliation-db-prod
+    volumes:
+      - affiliation-db-prod-data:/data/db
+    restart: always
+    ports:
+      - '27020:27017'
+    logging:
+      driver: none
+    networks:
+      - backend
+  # Configuración contenedor API
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: affiliation-api:prod
+    container_name: affiliation-api-prod
+    environment:
+      MONGODB_URI: db
+      JWT_SECRET: secret
+      CLOUD_NAME: deqnmn50h
+      API_KEY: 563721284152585
+      API_SECRET: _wyTCD42cCFarVeZSaF7REqLtgU
+    # ports:
+    #   - '3002:3000'
+    networks:
+      - backend
+  # Configuración contenedor API 2
+  api-two:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    image: affiliation-api-two:prod
+    container_name: affiliation-api-two-prod
+    environment:
+      MONGODB_URI: db
+      JWT_SECRET: secret
+      CLOUD_NAME: deqnmn50h
+      API_KEY: 563721284152585
+      API_SECRET: _wyTCD42cCFarVeZSaF7REqLtgU
+    # ports:
+    #   - '3003:3000'
+    networks:
+      - backend
+  # Configuración contenedor nginx
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: affiliation-balancer:prod
+    container_name: affiliation-balancer-prod
+    restart: unless-stopped
+    ports:
+      - 80:80
+    networks:
+      - backend
+
+volumes:
+  affiliation-db-prod-data:
+    name: affiliation-db-prod-data
+
+networks:
+  backend:
+    name: affiliation-application-network-backend
+    driver: bridge
