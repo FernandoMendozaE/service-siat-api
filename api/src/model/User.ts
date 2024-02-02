@@ -1,12 +1,4 @@
-import {
-  DocumentType,
-  getModelForClass,
-  index,
-  ModelOptions,
-  pre,
-  prop,
-  Ref
-} from '@typegoose/typegoose'
+import { DocumentType, getModelForClass, index, ModelOptions, pre, prop, Ref } from '@typegoose/typegoose'
 import { Role } from './Role'
 import bycrypt from 'bcryptjs'
 
