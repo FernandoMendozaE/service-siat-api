@@ -10,7 +10,7 @@ COPY . .
 RUN npm run build
 
 # stage two
-FROM mcr.microsoft.com/playwright:v1.21.0-focal
+FROM node:lts-alpine
 
 EXPOSE 3000
 
@@ -19,6 +19,9 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install --only=production
+
+# Asegúrate de que el módulo 'express' esté instalado globalmente
+RUN npm install -g express
 
 COPY --from=builder /api/dist /app/dist
 

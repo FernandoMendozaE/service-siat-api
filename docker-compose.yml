@@ -4,9 +4,9 @@ services:
   # Configuración contenedor de MongoDB
   db:
     image: mongo
-    container_name: affiliation-db-prod
+    container_name: socket-db-prod
     volumes:
-      - affiliation-db-prod-data:/data/db
+      - socket-db-prod-data:/data/db
     restart: always
     ports:
       - '27020:27017'
@@ -19,8 +19,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    image: affiliation-api:prod
-    container_name: affiliation-api-prod
+    image: socket-api:prod
+    container_name: socket-api-prod
     environment:
       MONGODB_URI: db
       JWT_SECRET: secret
@@ -36,8 +36,8 @@ services:
     build:
       context: ./api
       dockerfile: Dockerfile
-    image: affiliation-api-two:prod
-    container_name: affiliation-api-two-prod
+    image: socket-api-two:prod
+    container_name: socket-api-two-prod
     environment:
       MONGODB_URI: db
       JWT_SECRET: secret
@@ -53,8 +53,8 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
-    image: affiliation-balancer:prod
-    container_name: affiliation-balancer-prod
+    image: socket-balancer:prod
+    container_name: socket-balancer-prod
     restart: unless-stopped
     ports:
       - 80:80
@@ -62,10 +62,10 @@ services:
       - backend
 
 volumes:
-  affiliation-db-prod-data:
-    name: affiliation-db-prod-data
+  socket-db-prod-data:
+    name: socket-db-prod-data
 
 networks:
   backend:
-    name: affiliation-application-network-backend
+    name: socket-application-network-backend
     driver: bridge

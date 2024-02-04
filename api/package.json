@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc && npm run copy-html",
-    "copy-html": "ncp src/public/*.html dist/public",
+    "copy-html": "ncp src/public dist/public",
     "dev": "ts-node-dev --respawn --exit-child --watch --files src/index.ts",
     "start": "node dist/index.js"
   },
