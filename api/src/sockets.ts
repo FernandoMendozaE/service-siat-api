@@ -1,5 +1,22 @@
 import { Server } from 'socket.io'
 import Note, { NoteDocument } from './model/Note'
+import winston from 'winston'
+import chalk from 'chalk'
+
+const logger = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.colorize(),
+    winston.format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    winston.format.printf(info => {
+      const { timestamp, level, message } = info
+      const logMessage = `[${timestamp}] [${level}] ${message}`
+      return level === 'error' ? chalk.red(logMessage) : logMessage
+    })
+  ),
+  transports: [new winston.transports.Console(), new winston.transports.File({ filename: 'error.log' })]
+})
 
 export default (io: Server): void => {
   io.on('connection', socket => {
@@ -7,8 +24,8 @@ export default (io: Server): void => {
       try {
         const notes: NoteDocument[] = await Note.find()
         io.emit('server:loadnotes', notes)
-      } catch (error) {
-        console.error('Error fetching notes:', error)
+      } catch (error: any) {
+        logger.error(`Error fetching notes: ${(error as Error).message}`)
       }
     }
     emitNotes()
@@ -18,8 +35,8 @@ export default (io: Server): void => {
         const newNote = new Note(data)
         const savedNote: NoteDocument = await newNote.save()
         io.emit('server:newnote', savedNote)
-      } catch (error) {
-        console.error('Error saving new note:', error)
+      } catch (error: any) {
+        logger.error(`Error saving new note: ${(error as Error).message}`)
       }
     })
 
@@ -27,8 +44,8 @@ export default (io: Server): void => {
       try {
         await Note.findByIdAndDelete(id)
         emitNotes()
-      } catch (error) {
-        console.error('Error deleting note:', error)
+      } catch (error: any) {
+        logger.error(`Error deleting note: ${(error as Error).message}`)
       }
     })
 
@@ -39,8 +56,8 @@ export default (io: Server): void => {
         if (note) {
           io.emit('server:selectednote', note)
         }
-      } catch (error) {
-        console.error('Error getting note:', error)
+      } catch (error: any) {
+        logger.error(`Error getting note: ${(error as Error).message}`)
       }
     })
 
@@ -51,8 +68,8 @@ export default (io: Server): void => {
           description: updatedNote.description
         })
         emitNotes()
-      } catch (error) {
-        console.error('Error updating note:', error)
+      } catch (error: any) {
+        logger.error(`Error updating note: ${(error as Error).message}`)
       }
     })
   })

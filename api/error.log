@@ -1,0 +1,14 @@
+error: Error saving new note: Note validation failed: title: Path `title` is required. {"timestamp":"2024-02-04T02:08:24.994Z"}
+error: Error saving new note: Note validation failed: title: Path `title` is required. {"timestamp":"2024-02-04T02:09:10.827Z"}
+[31merror[39m: Error saving new note: Note validation failed: title: Path `title` is required. {"timestamp":"2024-02-04T02:10:14.929Z"}
+[31merror[39m: Error saving new note: Note validation failed: title: Path `title` is required. {"timestamp":"2024-02-04T02:13:39.202Z"}
+[2024-02-03 22:14:50] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:17] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:17] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:18] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:18] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:19] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:19] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:15:20] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:24:43] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
+[2024-02-03 22:24:44] [[31merror[39m] Error saving new note: Note validation failed: title: Path `title` is required.
