@@ -1,7 +1,7 @@
 import { Server } from 'socket.io'
 import Note, { NoteDocument } from './model/Note'
 import winston from 'winston'
-import chalk from 'chalk'
+import 'colors' // Importa la biblioteca 'colors'
 
 const logger = winston.createLogger({
   format: winston.format.combine(
@@ -12,7 +12,7 @@ const logger = winston.createLogger({
     winston.format.printf(info => {
       const { timestamp, level, message } = info
       const logMessage = `[${timestamp}] [${level}] ${message}`
-      return level === 'error' ? chalk.red(logMessage) : logMessage
+      return level === 'error' ? logMessage.red : logMessage // Utiliza 'red' de 'colors' aquí
     })
   ),
   transports: [new winston.transports.Console(), new winston.transports.File({ filename: 'error.log' })]
